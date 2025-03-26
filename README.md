@@ -1,2 +1,2 @@
 # mdLt
-Lifetech core controller that can be extended to enlarge the framework
+Lifetech core controllers that can be extended to enlarge the framework
