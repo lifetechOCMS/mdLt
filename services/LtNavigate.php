@@ -1,6 +1,6 @@
 <?php 
 if (!class_exists('Lifepage')) {
-    class Lifepage extends Model { }
+    class Lifepage extends LtModel { }
 }
 
 class LtNavigate {
@@ -77,7 +77,5 @@ function ltNavigateBack() {
  * 
  */
 
-*/
 
 ?>
-      
