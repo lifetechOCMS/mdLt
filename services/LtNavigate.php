@@ -13,16 +13,18 @@ class LtNavigate {
 
         if ($module_name == "") {
             $lifepageModel->findId('page_name', $page_name);
-            $response_data = $lifepageModel->response_data->pageurl_new ?? null;
+            //$response_data = $lifepageModel->responseData->pageurlNew ?? null;
+            $response_data = $lifepageModel->responseData['pageurlNew'] ?? null;
         } else {
             $lifepageModel->select('pageurl_new')
                 ->where('page_name', $page_name)
                 ->andWhere('module_name', $module_name)
                 ->get();
-            $response_data = $lifepageModel->response_data[0]->pageurl_new ?? null;
+            $response_data = $lifepageModel->responseData[0]['pageurlNew'] ?? null;
         }
-
-        $this->url = ($lifepageModel->response_category == "200" && $response_data)
+        //print_r($lifepageModel->responseData[0]['pageurlNew']);
+       
+        $this->url = ($lifepageModel->responseCategory == "200" && $response_data)
             ? lifetech_site_host_address() . '/' . $response_data
             : "PageNotFound";
 
@@ -79,3 +81,4 @@ function ltNavigateBack() {
 
 
 ?>
+      

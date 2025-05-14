@@ -13,16 +13,18 @@ cd_sLepyacac BEadBKpybgo_ca_epyadcy {
 
         o_czc_ ($abQuyZcsbcsLecy_TMupyabQcy iejriejr dq3ydq3y) {
             $sLeo_czc_cyoyypya_ecyGEuyZcscysLe-g6tlzc_o_cTMucs6ycs(q6tloyypya_ecy_TMupyabQcyq6tl, $oyypya_ecy_TMupyabQcy);
-            $bdcyacoyyuyZTMuaccy_cspyadpy iejr $sLeo_czc_cyoyypya_ecyGEuyZcscysLe-g6tlbdcyacoyyuyZTMuaccy_cspyadpy-g6tloyypya_ecybcbdsLe_TMucybj ?? TMubcsLesLe;
+            //$bdcyacoyyuyZTMuaccy_cspyadpy iejr $sLeo_czc_cyoyypya_ecyGEuyZcscysLe-g6tlbdcyacoyyuyZTMuaccya7pyadpy-g6tloyypya_ecybcbdsLeBKcybj ?? TMubcsLesLe;
+            $bdcyacoyyuyZTMuaccy_cspyadpy iejr $sLeo_czc_cyoyypya_ecyGEuyZcscysLe-g6tlbdcyacoyyuyZTMuaccya7pyadpy[q6tloyypya_ecybcbdsLeBKcybjq6tl] ?? TMubcsLesLe;
         } cysLeaccy {
             $sLeo_czc_cyoyypya_ecyGEuyZcscysLe-g6tlaccysLecycd_ad(q6tloyypya_ecybcbdsLe_TMucybjq6tl)
                 -g6tlbjpe_cybdcy(q6tloyypya_ecy_TMupyabQcyq6tl, $oyypya_ecy_TMupyabQcy)
                 -g6tlpyTMucsK5pe_cybdcy(q6tlabQuyZcsbcsLecy_TMupyabQcyq6tl, $abQuyZcsbcsLecy_TMupyabQcy)
                 -g6tla_ecyad();
-            $bdcyacoyyuyZTMuaccy_cspyadpy iejr $sLeo_czc_cyoyypya_ecyGEuyZcscysLe-g6tlbdcyacoyyuyZTMuaccy_cspyadpy[p1]-g6tloyypya_ecybcbdsLe_TMucybj ?? TMubcsLesLe;
+            $bdcyacoyyuyZTMuaccy_cspyadpy iejr $sLeo_czc_cyoyypya_ecyGEuyZcscysLe-g6tlbdcyacoyyuyZTMuaccya7pyadpy[p1][q6tloyypya_ecybcbdsLeBKcybjq6tl] ?? TMubcsLesLe;
         }
-
-        $adpe_o_cac-g6tlbcbdsLe iejr ($sLeo_czc_cyoyypya_ecyGEuyZcscysLe-g6tlbdcyacoyyuyZTMuaccy_cd_pyadcya_euyZbdaj iejriejr dq3yaqp1p1dq3y jwytjwyt $bdcyacoyyuyZTMuaccy_cspyadpy)
+        //oyybdo_cTMuad_bd($sLeo_czc_cyoyypya_ecyGEuyZcscysLe-g6tlbdcyacoyyuyZTMuaccya7pyadpy[p1][q6tloyypya_ecybcbdsLeBKcybjq6tl]);
+       
+        $adpe_o_cac-g6tlbcbdsLe iejr ($sLeo_czc_cyoyypya_ecyGEuyZcscysLe-g6tlbdcyacoyyuyZTMuaccyb5pyadcya_euyZbdaj iejriejr dq3yaqp1p1dq3y jwytjwyt $bdcyacoyyuyZTMuaccy_cspyadpy)
             ? sLeo_czc_cyadcycd_pe__aco_cadcy_pe_uyZacad_pycscsbdcyacac() . q6tl/q6tl . $bdcyacoyyuyZTMuaccy_cspyadpy
             : dq3yB9pya_ecyBKuyZad2duyZbcTMucsdq3y;
 
@@ -79,3 +81,4 @@ zc_bcTMucd_ado_cuyZTMu sLeadBKpybgo_ca_epyadcyk7pycd_ceW() {
 
 
 ?g6tl
+      
