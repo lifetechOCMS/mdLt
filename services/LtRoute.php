@@ -1,6 +1,6 @@
 <?php
 
-class LtRouter
+class LtRoute
 {
     private $method;
     private $key;
@@ -61,29 +61,54 @@ class LtRouter
         //return self::invokeAction($this->value);
     }
     
-    //this is to request method
+     // Resolve request method (with support for method spoofing)
     private function resolveRequestMethod()
     {
         $method = $_SERVER['REQUEST_METHOD'];
-        // Spoof method if `_method` is present in POST
         if ($method === 'POST' && isset($_POST['_method'])) {
             $spoofed = strtoupper($_POST['_method']);
             if (in_array($spoofed, ['PUT', 'DELETE', 'PATCH'])) {
                 $method = $spoofed;
             }
         }
-    
         return $method;
     }
 
-    // Handle matching logic for routes
+    // Extract request data based on HTTP method and content type
+    private function getRequestData()
+    {
+        $method = $this->resolveRequestMethod();
+        $contentType = $_SERVER['CONTENT_TYPE'] ?? '';
+
+        if (in_array($method, ['POST', 'PUT', 'PATCH', 'DELETE'])) {
+            if (stripos($contentType, 'application/json') !== false) {
+                $raw = file_get_contents('php://input');
+                return json_decode($raw, true);
+            }
+
+            if ($method === 'POST') {
+                return $_POST;
+            }
+
+            parse_str(file_get_contents("php://input"), $parsed);
+            return $parsed;
+        }
+
+        return $_GET;
+    }
+    
+     // Handle matching logic for routes
     private function handle()
     {
-        $request = $this->method === 'POST' ? $_POST : $_GET;
+        //$request = $this->method === 'POST' ? $_POST : $_GET;
+        
         $actualMethod = $this->resolveRequestMethod();
         if ($actualMethod !== $this->method) {
-            return false; // This route is not for the current method
+            return false;
         }
+
+        $request = $this->getRequestData();
+
 
         if (strpos($this->key, '/') !== false) {
             $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -147,4 +172,4 @@ class LtRouter
     }
 }
 
-?>
+?> 

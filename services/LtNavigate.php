@@ -7,34 +7,51 @@ class LtNavigate {
     private $url = "";
     private $queryParams = [];
 
+    public static function to($pageName = "", $moduleName = ""){
+       // return 
+       return new self($pageName, $moduleName);
+    }
+    
+    private function __construct($pageName = "", $moduleName = ""){
+         $this->toStart($pageName,$moduleName);
+    }
+    
     // Set the URL for navigation
-    public function to($page_name = "", $module_name = "") {
+    private  function toStart($pageName = "", $moduleName = "") {
+        
         $lifepageModel = new Lifepage;
 
-        if ($module_name == "") {
-            $lifepageModel->findId('page_name', $page_name);
+        if ($moduleName == "") {
+            $lifepageModel->findId('page_name', $pageName);
             //$response_data = $lifepageModel->responseData->pageurlNew ?? null;
-            $response_data = $lifepageModel->responseData['pageurlNew'] ?? null;
+            $response_data = $lifepageModel->responseData->pageurlNew ?? null;
         } else {
             $lifepageModel->select('pageurl_new')
-                ->where('page_name', $page_name)
-                ->andWhere('module_name', $module_name)
+                ->where('page_name', $pageName)
+                ->andWhere('module_name', $moduleName)
                 ->get();
-            $response_data = $lifepageModel->responseData[0]['pageurlNew'] ?? null;
+            $response_data = $lifepageModel->responseData[0]->pageurlNew ?? null;
         }
         //print_r($lifepageModel->responseData[0]['pageurlNew']);
        
         $this->url = ($lifepageModel->responseCategory == "200" && $response_data)
             ? lifetech_site_host_address() . '/' . $response_data
             : "PageNotFound";
-
-        return $this;
+            echo $this->url;
+            return $this->url;
     }
-
+    
+    //public function __toString() {
+    //   // return $this->url;
+    //}
+   
     // Store query parameters
     public function withQuery(array $queryParams) {
         $this->queryParams = array_merge($this->queryParams, $queryParams);
-        return $this;
+         $queryString = http_build_query($this->queryParams);
+         $this->url = $this->url . ($queryString ? "?$queryString" : ""); 
+        echo  ($queryString ? "?$queryString" : ""); 
+       return $this;
     }
 
     // Store data in session
@@ -43,27 +60,18 @@ class LtNavigate {
         return $this;
     }
 
-    // Construct full URL with query parameters
-    private function buildUrl() {
-        $queryString = http_build_query($this->queryParams);
-        return $this->url . ($queryString ? "?$queryString" : "");
-    }
-
     // Perform redirection
     public function redirect() { 
-        header("Location: " . $this->buildUrl());
+        header("Location: " .  $this->url);
         exit();  
     }
 
-    // Get the URL without redirecting
-    public function getUrl() {
-        return $this->buildUrl();
-    }
+    
 }
 
 // Helper functions
-function ltNavigateTo($page_name = "", $module_name = "") {
-    return (new LtNavigate())->to($page_name, $module_name);
+function ltNavigateTo($pageName = "", $moduleName = "") {
+    return  LtNavigate::to($pageName, $moduleName);
 }
 
 function ltNavigateData($key = "") {
@@ -81,4 +89,5 @@ function ltNavigateBack() {
 
 
 ?>
+      
       
