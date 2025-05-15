@@ -31,7 +31,21 @@ class LtRoute
             //$this->handled = true;
         }
     }
-
+    
+    //this is used to get the url path to match with the routere
+    public function trimBasePath(): string {
+        $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $base = ltSiteHostAddress(); 
+        if ($base === '/') {
+            return $url;
+        }
+    
+        if (str_starts_with($url, $base)) {
+            return substr($url, strlen($base)) ?: '/';
+        }
+    
+        return $url;
+    }
     // Middleware method for chaining middleware checks
     public function middleware($callback = null)
     {
@@ -111,7 +125,7 @@ class LtRoute
 
 
         if (strpos($this->key, '/') !== false) {
-            $urlPath = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+            $urlPath = trimBasePath();
             if ($urlPath === $this->key) {
                 return self::invokeAction($this->value);
             }
@@ -135,7 +149,6 @@ class LtRoute
         if (isset($request[$param]) && $request[$param] === $expected) {
             return self::invokeAction($this->value);
         }
-
         return false;
     }
 
@@ -173,3 +186,4 @@ class LtRoute
 }
 
 ?> 
+      

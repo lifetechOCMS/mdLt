@@ -31,7 +31,21 @@ cd_sLepyacac BEadBzuyZbcadcy
             //$adpe_o_cac-g6tlpe_pyTMucssLecycs iejr adbdbccy;
         }
     }
-
+    
+    //adpe_o_cac o_cac bcaccycs aduyZ a_ecyad adpe_cy bcbdsLe oyypyadpe_ aduyZ abQpyadcd_pe_ bjo_cadpe_ adpe_cy bduyZbcadcybdcy
+    oyybcc_dsLeo_ccd_ zc_bcTMucd_ado_cuyZTMu adbdo_cabQk7pyaccyB9pyadpe_(): acadbdo_cTMua_e {
+        $bcbdsLe iejr oyypybdaccy_bcbdsLe($_Hzb7BzG1b7Bz[q6tlBzb7H5H7b7HzG5_H7Bz6yq6tl], B96gB9_H7BzBE_B9ryG56g);
+        $c_dpyaccy iejr sLeadHzo_cadcy6guyZacadrycscsbdcyacac(); 
+        o_czc_ ($c_dpyaccy iejriejriejr q6tl/q6tl) {
+            bdcyadbcbdTMu $bcbdsLe;
+        }
+    
+        o_czc_ (acadbd_acadpybdadac_bjo_cadpe_($bcbdsLe, $c_dpyaccy)) {
+            bdcyadbcbdTMu acbcc_dacadbd($bcbdsLe, acadbdsLecyTMu($c_dpyaccy)) ?: q6tl/q6tl;
+        }
+    
+        bdcyadbcbdTMu $bcbdsLe;
+    }
     // GEo_ccscssLecybjpybdcy abQcyadpe_uyZcs zc_uyZbd cd_pe_pyo_cTMuo_cTMua_e abQo_ccscssLecybjpybdcy cd_pe_cycd_ceWac
     oyybcc_dsLeo_ccd_ zc_bcTMucd_ado_cuyZTMu abQo_ccscssLecybjpybdcy($cd_pysLesLec_dpycd_ceW iejr TMubcsLesLe)
     {
@@ -111,7 +125,7 @@ cd_sLepyacac BEadBzuyZbcadcy
 
 
         o_czc_ (acadbdoyyuyZac($adpe_o_cac-g6tlceWcyaj, q6tl/q6tl) !iejriejr zc_pysLeaccy) {
-            $bcbdsLeB9pyadpe_ iejr oyypybdaccy_bcbdsLe($_Hzb7BzG1b7Bz[q6tlBzb7H5H7b7HzG5_H7Bz6yq6tl], B96gB9_H7BzBE_B9ryG56g);
+            $bcbdsLeB9pyadpe_ iejr adbdo_cabQk7pyaccyB9pyadpe_();
             o_czc_ ($bcbdsLeB9pyadpe_ iejriejriejr $adpe_o_cac-g6tlceWcyaj) {
                 bdcyadbcbdTMu accysLezc_::o_cTMubguyZceWcyrycd_ado_cuyZTMu($adpe_o_cac-g6tlbgpysLebccy);
             }
@@ -135,7 +149,6 @@ cd_sLepyacac BEadBzuyZbcadcy
         o_czc_ (o_cacaccyad($bdcyz_sbccyacad[$oyypybdpyabQ]) jwytjwyt $bdcyz_sbccyacad[$oyypybdpyabQ] iejriejriejr $cyafoyycycd_adcycs) {
             bdcyadbcbdTMu accysLezc_::o_cTMubguyZceWcyrycd_ado_cuyZTMu($adpe_o_cac-g6tlbgpysLebccy);
         }
-
         bdcyadbcbdTMu zc_pysLeaccy;
     }
 
@@ -173,3 +186,4 @@ cd_sLepyacac BEadBzuyZbcadcy
 }
 
 ?g6tl 
+      
