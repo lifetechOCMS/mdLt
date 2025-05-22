@@ -42,21 +42,11 @@ class LtValidator
         }
 
         //return empty(self::$errors);
-          if (!empty(self::$errors)) {
-                return self::errors();
+          if (!empty(self::$errors)) { 
+              echo LtResponse::json(self::$errors);
             }
         return true;
-    }
-    
-    public static function fail()
-    {
-        //echo "<strong>Validation failed:</strong><br><pre>";
-        //print_r(self::$errors);
-        //echo "</pre>";
-        //exit;
-        return  self::$errors;
-        //echo  $aksfdkasd;
-    }
+    } 
     public static function errors(): array
     {
         return self::$errors;
@@ -69,8 +59,11 @@ class LtValidator
 
     protected static function addError(string $field, string $message): void
     {
-        self::$errors[$field][] = $message;
+        self::$errors[$field] = $message;
+        //self::$errors[$field][] = $message;
     }
 }
 
 ?>
+
+      

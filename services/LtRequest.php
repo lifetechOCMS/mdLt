@@ -1,5 +1,4 @@
-<?php  
-
+<?php   
 class LtRequest
 {
     public $method;
@@ -45,7 +44,20 @@ class LtRequest
             $this->loadData($parsed);
         }
     }
+    
+    public function validateRequest(array $rules = []) { 
+ // Check if data is empty, meaning use LtRequest
+            if (empty($rules)) {
+                 return LtResponse::json("Your data should not be empty");
+            }
+        // Convert all public properties (except 'method') into an array
+            $requestData = get_object_vars($this);
+            unset($requestData['method']);
+            return LtValidator::validate($requestData, $rules); 
+    }
+    
 }
 ?>
+      
       
       

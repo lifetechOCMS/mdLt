@@ -42,21 +42,11 @@ cd_sLepyacac BEadG1pysLeo_ccspyaduyZbd
         }
 
         //bdcyadbcbdTMu cyabQoyyadaj(accysLezc_::$cybdbduyZbdac);
-          o_czc_ (!cyabQoyyadaj(accysLezc_::$cybdbduyZbdac)) {
-                bdcyadbcbdTMu accysLezc_::cybdbduyZbdac();
+          o_czc_ (!cyabQoyyadaj(accysLezc_::$cybdbduyZbdac)) { 
+              cycd_pe_uyZ BEadBzcyacoyyuyZTMuaccy::p_xacuyZTMu(accysLezc_::$cybdbduyZbdac);
             }
         bdcyadbcbdTMu adbdbccy;
-    }
-    
-    oyybcc_dsLeo_ccd_ acadpyado_ccd_ zc_bcTMucd_ado_cuyZTMu zc_pyo_csLe()
-    {
-        //cycd_pe_uyZ dq3yy6tlacadbduyZTMua_eg6tlG1pysLeo_ccspyado_cuyZTMu zc_pyo_csLecycs:y6tl/acadbduyZTMua_eg6tly6tlc_dbdg6tly6tloyybdcyg6tldq3y;
-        //oyybdo_cTMuad_bd(accysLezc_::$cybdbduyZbdac);
-        //cycd_pe_uyZ dq3yy6tl/oyybdcyg6tldq3y;
-        //cyafo_cad;
-        bdcyadbcbdTMu  accysLezc_::$cybdbduyZbdac;
-        //cycd_pe_uyZ  $pyceWaczc_csceWpyaccs;
-    }
+    } 
     oyybcc_dsLeo_ccd_ acadpyado_ccd_ zc_bcTMucd_ado_cuyZTMu cybdbduyZbdac(): pybdbdpyaj
     {
         bdcyadbcbdTMu accysLezc_::$cybdbduyZbdac;
@@ -69,8 +59,11 @@ cd_sLepyacac BEadG1pysLeo_ccspyaduyZbd
 
     oyybduyZadcycd_adcycs acadpyado_ccd_ zc_bcTMucd_ado_cuyZTMu pycscsb7bdbduyZbd(acadbdo_cTMua_e $zc_o_ccysLecs, acadbdo_cTMua_e $abQcyacacpya_ecy): bguyZo_ccs
     {
-        accysLezc_::$cybdbduyZbdac[$zc_o_ccysLecs][] iejr $abQcyacacpya_ecy;
+        accysLezc_::$cybdbduyZbdac[$zc_o_ccysLecs] iejr $abQcyacacpya_ecy;
+        //accysLezc_::$cybdbduyZbdac[$zc_o_ccysLecs][] iejr $abQcyacacpya_ecy;
     }
 }
 
 ?g6tl
+
+      
