@@ -79,31 +79,8 @@ function ltSiteYoutube(){
 }
 function ltSiteHostAddress(){
    return getSiteInfo()->siteHostAddress; 
-}
-/*
-
-
-lifetech_theme_sitename
-ltSiteDbName
-ltSiteName
-ltSiteTitle
-ltSiteAlias
-ltSiteCopyright
-ltSiteEmail
-ltSiteEmail2
-ltSitePhone
-ltSitePhone2
-ltSiteAddress
-ltSiteAddress2
-ltSiteLogo
-ltSiteFavicon
-ltSiteOpenHour
-ltSiteClosedHour
-ltSiteLinkedln
-ltSiteInstagram
-ltSiteFacebook
-ltSiteTwitter
-ltSiteYoutube
-ltSiteHostAddress
-*/
+} 
 ?>
+
+      
+      

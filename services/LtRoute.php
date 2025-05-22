@@ -125,7 +125,7 @@ class LtRoute
 
 
         if (strpos($this->key, '/') !== false) {
-            $urlPath = trimBasePath();
+            $urlPath = $this->trimBasePath();
             if ($urlPath === $this->key) {
                 return self::invokeAction($this->value);
             }
@@ -185,5 +185,5 @@ class LtRoute
     }
 }
 
-?> 
+?>  
       
