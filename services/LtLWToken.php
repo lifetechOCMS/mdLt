@@ -20,42 +20,49 @@ class LtLWToken
         return LtResponse::json("Insert successfully", "203", "200");
     }
     
+
+    public static function LWT_Token($token, $expireTime = "600")
+    {
+        $tokenization_instance = new Tb_lwt_tokenization;
     
-   public static function LWT_Token($token, $expireTime=""){
+        $sql_query = $tokenization_instance->select()
+            ->where('token', '=', $token)
+            ->andWhere('lifetech_table_status', '=', '1')
+            ->get();
     
-    if ($expireTime==""){
-        $expireTime="600";
+        if (count($sql_query) === 0) {
+            return LtResponse::json("Incorrect Token", "103", "100");
+        }
+    
+        $tokenization = $sql_query[0];
+        $tokenId = $tokenization->lifetech_general_id;
+        $expirationTime = strtotime($tokenization->expireTime);
+    
+        if (time() > $expirationTime) {
+            // Optional: Delete expired token if needed
+            // $tokenization_instance->delete('lifetech_general_id', '=', $tokenId);
+            return LtResponse::json("Session Expired", "107", "100");
+        }
+    
+        // Extend expiration
+        $newExpirationTime = date("Y-m-d H:i:s", time() + (int)$expireTime);
+        $tokenization_instance->expireTime = $newExpirationTime;
+        $tokenization_instance->last_updated = date("Y-m-d H:i:s");
+        $tokenization_instance->update('lifetech_general_id', '=', $tokenId);
+    
+        $responseData = [
+            'user_role' => $tokenization->user_role
+        ];
+    
+        return LtResponse::json("Token updated", "201", "200", $responseData);
+    
     }
-    
-    $tokenization_instance = new Tb_lwt_tokenization;
-    $sql_query = $tokenization_instance->select()->where('token', '=', $token)->andWhere('lifetech_table_status', '=', '1')->get();
-      if(count($sql_query) > 0){
-          $tokenization = $sql_query[0];        
-          $tokenId = $tokenization->lifetech_general_id;
-          $tokenizationDataReturn = ['user_role'=>$tokenization->user_role];
-          $expirationTime = strtotime($tokenization->expireTime);
-          if(time() > $expirationTime){
-             // $tonization_instance->delete('lifetech_general_id', '=', $tokenId);
-              $response = LtResponse::json($responseResult="Session Expired", $responseCode="107", $responseCategory="100");
-              return $response;
-          }else{
-               $newExpirationTime = date("Y-m-d H:i:s", time() + $expireTime);
-               $tokenization_instance->expireTime = $newExpirationTime; // Current time + expiration time of 10 minutes in seconds
-               $tokenization_instance->last_updated = date("Y-m-d H:i:s"); // Current time + expiration time of 10 minutes in seconds
-               $tokenization_instance->update('lifetech_general_id', '=', $tokenId);
-               $response = LtResponse::json($responseResult= "Token updated", $responseCode="201", $responseCategory="200", $responseData=$tokenizationDataReturn);
-               return $response;
-          }
-       
-       
-      }else{
-          $response = LtResponse::json($responseResult="Incorrect Token", $responseCode="103", $responseCategory="100");
-            return $response;
-      }
-      
-   }
+
+
    
 
 }
 
 ?>
+      
+      
