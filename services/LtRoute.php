@@ -275,17 +275,19 @@ class LtRoute
             $updateSql = "UPDATE lifepage SET page_name = :page_name, route_method = :route_method, route_content = :route_content, pagetype = :pagetype, status = :status, module_name = :module_name, updated_by = :updated_by WHERE pageurl_new = :pageurl_new";
             $stmt = $db->prepare($updateSql);
             $stmt->execute($data);
-            echo "<br>Updated route: $method.' '.$pageurl_new\n";
+            //echo "<br>Updated route: $method.' '.$pageurl_new\n";
         } else {
             // Insert new
             $insertSql = "INSERT INTO lifepage (page_name, route_method, route_content, pageurl_new, pagetype, status, module_name, updated_by) VALUES (:page_name, :route_method,:route_content,  :pageurl_new, :pagetype, :status, :module_name, :updated_by)";
             $stmt = $db->prepare($insertSql);
             $stmt->execute($data);
-            echo "Inserted new route: $pageurl_new\n";
+           // echo "Inserted new route: $pageurl_new\n";
         }
+        echo LtResponse::json("Succesful", "212","200");
     }
    }
 }
 
 ?>     
+      
       
