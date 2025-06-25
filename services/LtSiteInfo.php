@@ -81,6 +81,3 @@ function ltSiteHostAddress(){
    return getSiteInfo()->siteHostAddress; 
 } 
 ?>
-
-      
-      

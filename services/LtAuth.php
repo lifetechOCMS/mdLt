@@ -91,7 +91,7 @@ class LtAuth
 
             if (LtDdm::verifyPassword($user, $password)) {
                 self::internalActivateUser($user);
-                $user->LW_Token = LtSession::get('LW_Token');
+                $user->lw_token = LtSession::get('lw_token');
                 return LtResponse::json("Login Succesful", "210", "200",$user);
             }
         }
@@ -230,7 +230,4 @@ class LtAuth
     
 }
 ?>
-      
-      
-      
       

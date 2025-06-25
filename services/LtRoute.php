@@ -36,13 +36,34 @@ class LtRoute
     public function trimBasePath(): string {
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $base = ltSiteHostAddress(); 
-        if ($base === '/') {
+        if ($base === '/') { 
             return $url;
         }
-    
-        if (str_starts_with($url, $base)) {
+        if (str_ends_with($url, $this->key)) { 
+            return $this->key;
+            
+        }
+        
+        if (str_contains($this->key, '{')) { //echo $url;
+            $incomingUrl = $url;
+            $routePattern = $this->key;
+            // Step 1: Convert route pattern to regex without preg_quote messing up
+            $regex = preg_replace('/\{(\w+)\}/', '([^/]+)', $routePattern);
+            
+            // Step 2: Escape slashes and add end anchor
+            $regex = str_replace('/', '\/', $regex);
+            $regex = '/'. $regex . '$/'; // Match only end of URL
+            
+            // Step 3: Try matching
+            if (preg_match($regex, $incomingUrl, $matches)) {
+                array_shift($matches); // Remove full match
+                return $this->key;
+            }  
+        }
+        if (str_starts_with($url, $base)) { 
             return substr($url, strlen($base)) ?: '/';
         }
+        
     
         return $url;
     }
@@ -123,9 +144,8 @@ class LtRoute
 
         $request = $this->getRequestData();
 
-
         if (strpos($this->key, '/') !== false) {
-            $urlPath = $this->trimBasePath();
+            $urlPath = $this->trimBasePath(); 
             if ($urlPath === $this->key) {
                 return self::invokeAction($this->value);
             }
@@ -158,7 +178,8 @@ class LtRoute
         if (is_callable($value)) {
             return $value();
         }
-
+       
+                
         if (is_string($value) && substr_count($value, '@') >= 1) {
             $parts = explode('@', $value);
 
@@ -183,7 +204,88 @@ class LtRoute
 
         return false;
     }
+    
+    public static function register( $moduleName = '' , $contentName='') {
+    $db = DbConnect::dbDriver(); ;
+
+    // 1. Read route file contents
+   // $code = file_get_contents($filePath);
+    //the files
+    
+  /*  $code ="
+    LtRoute::get('/PurchaseStock/list', 'mdPosOp@TbPosStockController@listStockData');
+    //  update Stock Status
+    LtRoute::patch('/PurchaseStock/changeStatus', 'mdPosOp@TbPosStockController@status');
+    //  edit Stock 
+    LtRoute::get('/PurchaseStock/edit', 'mdPosOp@TbPosStockController@edit');
+    //  update Stock 
+    LtRoute::post('/PurchaseStock/update', 'mdPosOp@TbPosStockController@update');
+    //  delete Stock  
+    LtRoute::delete('/PurchaseStock/delete', 'mdPosOp@TbPosStockController@delete');
+    //  insert Stock  
+    LtRoute::post('/PurchaseStock/Register', function(){        echo 'trying';  })->name('registerPurchase');
+    ";
+    
+    */
+    
+     $code = ltImportReturn($moduleName,$contentName); 
+    // 2. Match all LtRoute::method('/path', 'module@Controller@method');
+    //preg_match_all('/LtRoute::(get|post|patch|put|delete)\s*\(\s*[\'"]([^\'"]+)[\'"]\s*,\s*[\'"]([^\'"]+)[\'"]\s*\)/i', $code, $matches, PREG_SET_ORDER);
+    preg_match_all(
+    '/LtRoute::(get|post|patch|put|delete)\s*\(\s*[\'"]([^\'"]+)[\'"]\s*,\s*(function\s*\([^)]*\)\s*\{.*?\}|[\'"][^\'"]+[\'"])\s*\)\s*(?:->name\(\s*[\'"]([^\'"]+)[\'"]\s*\))?/is',
+    $code,    $matches,    PREG_SET_ORDER    );
+    
+    foreach ($matches as $match) {
+        list(, $method, $routePath, $target, $routeName) = $match;
+
+        // Sanitize path
+        $pageurl_new = trim($routePath, '/'); 
+
+        if (str_starts_with($target, 'function')) {
+            $controller =  trim($target, '\'"');
+            $page_name = $routeName ?? 'AnonymousRoute';
+            $descr = 'Closure handler';
+        } else { 
+            $controller = trim($target, '\'"');
+            $page_name = explode('@', $controller);
+            $page_name = $routeName ?? end($page_name); // e.g. listStockData 
+        }
+    
+        
+
+        // Check if route already exists
+        $stmt = $db->prepare("SELECT * FROM lifepage WHERE pageurl_new = ? and module_name=?");
+        $stmt->execute([$pageurl_new,$moduleName]);
+        $existing = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Set default values
+        $data = [
+            'page_name'     => ucfirst($page_name),
+            'pageurl_new'   => $pageurl_new,
+            'pagetype'      => 'Router',
+            'status'        => 'Published',
+            'module_name'   => $moduleName,
+            'updated_by'    => 'route_sync_script',
+            'route_content'    => $controller,
+            'route_method'    => $method,
+        ];
+
+        if ($existing) {
+            // Update existing
+            $updateSql = "UPDATE lifepage SET page_name = :page_name, route_method = :route_method, route_content = :route_content, pagetype = :pagetype, status = :status, module_name = :module_name, updated_by = :updated_by WHERE pageurl_new = :pageurl_new";
+            $stmt = $db->prepare($updateSql);
+            $stmt->execute($data);
+            echo "<br>Updated route: $method.' '.$pageurl_new\n";
+        } else {
+            // Insert new
+            $insertSql = "INSERT INTO lifepage (page_name, route_method, route_content, pageurl_new, pagetype, status, module_name, updated_by) VALUES (:page_name, :route_method,:route_content,  :pageurl_new, :pagetype, :status, :module_name, :updated_by)";
+            $stmt = $db->prepare($insertSql);
+            $stmt->execute($data);
+            echo "Inserted new route: $pageurl_new\n";
+        }
+    }
+   }
 }
 
-?>  
+?>     
       
