@@ -1,1 +1,1 @@
-INSERT INTO module_tbl(module_name, module_image, status, date_created, last_update) VALUES('mdLt','N','Enabled','2025-04-12 06:22:55','2025-06-25 19:55:35');;;;;_lifetechend;;;;;
+INSERT INTO module_tbl(module_name, module_image, status, date_created, last_update) VALUES('mdLt','N','Enabled','2025-04-12 06:22:55','2025-06-26 10:39:09');;;;;_lifetechend;;;;;
