@@ -20,13 +20,13 @@ class LtRoute
     private function __construct($method, $key, $value)
     {
         $this->method = $method;
+        //$this->key = '/' . ltrim($key, '/'); 
         $this->key = $key;
         $this->value = $value;
-
-        //echo "check no of times invoking construct d ";
-
+        // echo LtResponse::json($this->value);
         // Only handle once
         if (!$this->handled) {
+          
             $this->handle();
             //$this->handled = true;
         }
@@ -36,10 +36,12 @@ class LtRoute
     public function trimBasePath(): string {
         $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $base = ltSiteHostAddress(); 
-        if ($base === '/') { 
+       /* if ($base === '/') { 
+            $url = '/' . ltrim($url, '/'); 
             return $url;
         }
-        if (str_ends_with($url, $this->key)) { 
+        */
+        if (str_ends_with($url, $this->key)) {   
             return $this->key;
             
         }
@@ -60,7 +62,7 @@ class LtRoute
                 return $this->key;
             }  
         }
-        if (str_starts_with($url, $base)) { 
+        if (str_starts_with($url, $base)) {  
             return substr($url, strlen($base)) ?: '/';
         }
         
@@ -144,9 +146,9 @@ class LtRoute
 
         $request = $this->getRequestData();
 
-        if (strpos($this->key, '/') !== false) {
-            $urlPath = $this->trimBasePath(); 
-            if ($urlPath === $this->key) {
+        if (strpos($this->key, '/') !== false) {  
+            $urlPath = $this->trimBasePath();  
+            if ($urlPath === $this->key) { 
                 return self::invokeAction($this->value);
             }
             return false;
@@ -177,6 +179,7 @@ class LtRoute
     // Invoke action (call controller or method)
     public static function invokeAction($value)
     {
+       
         if (is_callable($value)) {
             return $value();
         }
@@ -208,28 +211,7 @@ class LtRoute
     }
     
     public static function register( $moduleName = '' , $contentName='') {
-    $db = DbConnect::dbDriver(); ;
-
-    // 1. Read route file contents
-   // $code = file_get_contents($filePath);
-    //the files
-    
-  /*  $code ="
-    LtRoute::get('/PurchaseStock/list', 'mdPosOp@TbPosStockController@listStockData');
-    //  update Stock Status
-    LtRoute::patch('/PurchaseStock/changeStatus', 'mdPosOp@TbPosStockController@status');
-    //  edit Stock 
-    LtRoute::get('/PurchaseStock/edit', 'mdPosOp@TbPosStockController@edit');
-    //  update Stock 
-    LtRoute::post('/PurchaseStock/update', 'mdPosOp@TbPosStockController@update');
-    //  delete Stock  
-    LtRoute::delete('/PurchaseStock/delete', 'mdPosOp@TbPosStockController@delete');
-    //  insert Stock  
-    LtRoute::post('/PurchaseStock/Register', function(){        echo 'trying';  })->name('registerPurchase');
-    ";
-    
-    */
-    
+    $db = DbConnect::dbDriver();  
      $code = ltImportReturn($moduleName,$contentName); 
     // 2. Match all LtRoute::method('/path', 'module@Controller@method');
     //preg_match_all('/LtRoute::(get|post|patch|put|delete)\s*\(\s*[\'"]([^\'"]+)[\'"]\s*,\s*[\'"]([^\'"]+)[\'"]\s*\)/i', $code, $matches, PREG_SET_ORDER);
@@ -285,13 +267,11 @@ class LtRoute
             $stmt->execute($data);
            // echo "Inserted new route: $pageurl_new\n";
         }
-        echo LtResponse::json("Succesful", "212","200");
+       
     }
+     echo LtResponse::json("Succesful", "212","200");
    }
 }
 
 ?>     
-      
-      
-      
       
