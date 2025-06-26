@@ -155,8 +155,10 @@ class LtRoute
         if (strpos($this->key, '@') !== false) {
             list($param, $expected) = explode('@', $this->key, 2);
         } else {
-            $param = 'action';
-            $expected = $this->key;
+            $urlPath = $this->trimBasePath(); 
+            if ($urlPath === $this->key) {
+                return self::invokeAction($this->value);
+            }
         }
 
         if ($this->value === null) {
@@ -289,5 +291,6 @@ class LtRoute
 }
 
 ?>     
+      
       
       
