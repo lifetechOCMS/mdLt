@@ -219,6 +219,22 @@ class LtRoute
     '/LtRoute::(get|post|patch|put|delete)\s*\(\s*[\'"]([^\'"]+)[\'"]\s*,\s*(function\s*\([^)]*\)\s*\{.*?\}|[\'"][^\'"]+[\'"])\s*\)\s*(?:->name\(\s*[\'"]([^\'"]+)[\'"]\s*\))?/is',
     $code,    $matches,    PREG_SET_ORDER    );
     
+     /* $deleteSql = "DELETE FROM lifepage WHERE module_name = :module_name AND route_file_name = :route_file_name"; 
+        $stmt = $db->prepare($deleteSql);
+        $stmt->execute([
+            'module_name' => $moduleName,
+            'route_file_name' => $contentName,
+        ]);*/
+        
+        $updateSql =" UPDATE lifepage SET route_update_status = :route_update_status  WHERE module_name = :module_name AND route_file_name =:route_file_name";
+                $stmt = $db->prepare($updateSql);
+                $stmt->execute( [
+                    'route_update_status' => '0',      
+                    'module_name' => $moduleName,               
+                    'route_file_name' => $contentName            
+                ]);
+            
+        
     foreach ($matches as $match) {
         list(, $method, $routePath, $target, $routeName) = $match;
 
@@ -250,28 +266,40 @@ class LtRoute
             'status'        => 'Published',
             'module_name'   => $moduleName,
             'updated_by'    => 'route_sync_script',
-            'route_content'    => $controller,
+            'route_handler'    => $controller,
             'route_method'    => $method,
+            'route_file_name'    => $contentName,
+            'route_update_status'    => '1',
         ];
 
+      
+                
         if ($existing) {
             // Update existing
-            $updateSql = "UPDATE lifepage SET page_name = :page_name, route_method = :route_method, route_content = :route_content, pagetype = :pagetype, status = :status, module_name = :module_name, updated_by = :updated_by WHERE pageurl_new = :pageurl_new";
+            $updateSql = "UPDATE lifepage SET page_name = :page_name, route_method = :route_method, route_update_status = :route_update_status, route_file_name = :route_file_name, route_handler = :route_handler, pagetype = :pagetype, status = :status, module_name = :module_name, updated_by = :updated_by WHERE pageurl_new = :pageurl_new";
             $stmt = $db->prepare($updateSql);
             $stmt->execute($data);
             //echo "<br>Updated route: $method.' '.$pageurl_new\n";
         } else {
             // Insert new
-            $insertSql = "INSERT INTO lifepage (page_name, route_method, route_content, pageurl_new, pagetype, status, module_name, updated_by) VALUES (:page_name, :route_method,:route_content,  :pageurl_new, :pagetype, :status, :module_name, :updated_by)";
+            $insertSql = "INSERT INTO lifepage (page_name, route_method, route_update_status,route_file_name, route_handler, pageurl_new, pagetype, status, module_name, updated_by) VALUES (:page_name, :route_method, :route_update_status,:route_file_name, :route_handler,  :pageurl_new, :pagetype, :status, :module_name, :updated_by)";
             $stmt = $db->prepare($insertSql);
             $stmt->execute($data);
            // echo "Inserted new route: $pageurl_new\n";
         }
        
     }
+     $deleteSql = "DELETE FROM lifepage WHERE module_name = :module_name AND route_file_name = :route_file_name AND route_update_status = :route_update_status "; 
+        $stmt = $db->prepare($deleteSql);
+        $stmt->execute([
+            'module_name' => $moduleName,
+            'route_file_name' => $contentName,
+            'route_update_status' => '0',
+        ]);
      echo LtResponse::json("Succesful", "212","200");
    }
 }
 
 ?>     
+      
       
