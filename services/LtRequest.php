@@ -35,13 +35,17 @@ class LtRequest
 
         // Try to parse as JSON first
         $data = json_decode($input, true);
-
+        //var_dump($data);
+        //echo "trying on this page".$data.' lkk';
         if (is_array($data)) {
             $this->loadData($data);
-        } else {
-            // Fallback to form-encoded parsing
-            parse_str($input, $parsed);
+        } else { 
+            parse_str($input, $parsed);  
             $this->loadData($parsed);
+        }
+        
+        foreach (LtRequestPlaceholder::all() as $key => $value) {
+             $this->$key = $value;
         }
     }
     
@@ -57,6 +61,4 @@ class LtRequest
     }
     
 }
-?> 
-      
-      
+?>    
