@@ -254,8 +254,8 @@ class LtRoute
         
 
         // Check if route already exists
-        $stmt = $db->prepare("SELECT * FROM lifepage WHERE pageurl_new = ? and module_name=?");
-        $stmt->execute([$pageurl_new,$moduleName]);
+        $stmt = $db->prepare("SELECT * FROM lifepage WHERE pageurl_new = ? and module_name=? and route_method=?");
+        $stmt->execute([$pageurl_new,$moduleName,$method]);
         $existing = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // Set default values
@@ -269,14 +269,14 @@ class LtRoute
             'route_handler'    => $controller,
             'route_method'    => $method,
             'route_file_name'    => $contentName,
-            'route_update_status'    => '1',
+            'route_update_status'    => '1', 
         ];
 
       
                 
-        if ($existing) {
-            // Update existing
-            $updateSql = "UPDATE lifepage SET page_name = :page_name, route_method = :route_method, route_update_status = :route_update_status, route_file_name = :route_file_name, route_handler = :route_handler, pagetype = :pagetype, status = :status, module_name = :module_name, updated_by = :updated_by WHERE pageurl_new = :pageurl_new";
+        if ($existing) { 
+           $data['pageid'] = $existing['pageid']; 
+            $updateSql = "UPDATE lifepage SET page_name = :page_name, route_method = :route_method, route_update_status = :route_update_status, route_file_name = :route_file_name, route_handler = :route_handler, pagetype = :pagetype, status = :status, module_name = :module_name, updated_by = :updated_by , pageurl_new = :pageurl_new WHERE pageid = :pageid";
             $stmt = $db->prepare($updateSql);
             $stmt->execute($data);
             //echo "<br>Updated route: $method.' '.$pageurl_new\n";
@@ -300,4 +300,4 @@ class LtRoute
    }
 }
 
-?>     
+?>      
