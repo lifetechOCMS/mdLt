@@ -27,6 +27,7 @@ class LtAuth
 
         $id = $user->user_id;
         self::setLtSession($user, $id);
+        //get api tokens timeout parameter
         $toGetapiTokenExpiredTimeOut = ApiTokenDetails::apiTokenExpiredTimeOut();
         LtLWToken::insertLwtToken($id, $user->role_encrypt,$toGetapiTokenExpiredTimeOut);
     }
