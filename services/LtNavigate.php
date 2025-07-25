@@ -12,7 +12,7 @@ class LtNavigate {
        return new self($pageName, $moduleName);
     }
     
-    private function __construct($pageName = "", $moduleName = ""){
+    public function __construct($pageName = "", $moduleName = ""){
          $this->toStart($pageName,$moduleName);
     }
     
@@ -37,7 +37,7 @@ class LtNavigate {
         $this->url = ($lifepageModel->responseCategory == "200" && $response_data)
             ? lifetech_site_host_address() . '/' . $response_data
             : "PageNotFound";
-            echo $this->url;
+           // echo $this->url;
             return $this->url;
     }
     
@@ -75,7 +75,9 @@ function ltNavigateTo($pageName = "", $moduleName = "") {
 }
 
 function ltNavigateData($key = "") {
-    return Session::get($key);
+    $sessionData = Session::get($key);
+    Session::forget($key);
+    return $sessionData;
 }
 
 function ltNavigateBack() {
@@ -89,4 +91,4 @@ function ltNavigateBack() {
 
 
 ?>  
-      
+       
